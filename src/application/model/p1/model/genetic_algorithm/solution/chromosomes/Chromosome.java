@@ -29,6 +29,7 @@ public abstract class Chromosome<T extends Gene<?>> implements Comparable<Chromo
 	
 	protected abstract void calculateFenotype(); 
 	protected abstract double calculateFitness();
+	//protected abstract double calculateFitness(int[][] distances);
 	public abstract <U> Chromosome<T> createChildren(List<Gene<U>> childGenes);
 	public abstract Chromosome<T> clone();
 	

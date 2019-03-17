@@ -132,19 +132,7 @@ public class GeneticAlgorithm {
 		
 		return stats;
 	}
-	private void createInitialPopulation() {
-		/*int distances[][] = new int[27][27];
-		File file = new File("PATH"); 
-		try {
-			BufferedReader br = new BufferedReader(new FileReader(file));
-			String st;
-			while ((st = br.readLine()) != null) {
-			    st.split(",");
-			} 
-		} catch (IOException e) {
-			e.printStackTrace();
-		} */
-		
+	private void createInitialPopulation() {		
 		for (int i = 0; i < this.popSize; i++)
 			this.population.add(ChromosomeFactory.getInstance().createChromosome(this.function, this.tolerance, null, null, this.nVariables, _DISTANCES));
 	}
