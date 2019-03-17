@@ -10,7 +10,7 @@ public class ChromosomeFactoryImp extends ChromosomeFactory {
 
 	@Override
 	public Chromosome<? extends Gene<?>> createChromosome(String chromosome, double tolerance, Boolean maximize,
-			List<Pair<Double, Double>> intervals, Integer genesNumber, int[][] distances) {
+			List<Pair<Double, Double>> intervals, Integer genesNumber, int[][] distances, int distancesSize, int initialFinalCity) {
 		switch (chromosome.toLowerCase()) {
 		case "function1":
 			return new Function1(tolerance, maximize, intervals);
@@ -23,7 +23,7 @@ public class ChromosomeFactoryImp extends ChromosomeFactory {
 		case "realfunction4" :
 			return new RealFunction4(genesNumber, tolerance, maximize, intervals);
 		case "tsp":
-			return new TSPFunction(27, distances);
+			return new TSPFunction(distancesSize, distances, initialFinalCity);
 		default:
 			//Generate function 1 as default function. 
 			List<Pair<Double, Double>> defaultIntervals = new ArrayList<>(2);

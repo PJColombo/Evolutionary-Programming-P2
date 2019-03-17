@@ -1,34 +1,34 @@
 package application.model.p1.model.genetic_algorithm.solution.genes;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.TreeSet;
-
-import application.model.p1_utils.Pair;
 
 public class TSPGene extends Gene<Integer>{
 
-	private int pos;
-	
-	public TSPGene(double value, int pos) {
+	public TSPGene(int cityPos) {
 		super();
-		this.alleles = null;
+		this.alleles = new ArrayList<Integer>(1);
+		this.alleles.add(cityPos);
 		this.interval = null;
 		this.size = 1;
-		this.decodedValue = value;
-		this.pos = pos;
+		this.decodeGene();
 	}
 
 	public TSPGene(TSPGene tspGene) {
-		// TODO Auto-generated constructor stub
+		super();
+		this.interval = null;
+		this.size = tspGene.getSize();
+		this.alleles = new ArrayList<Integer>(tspGene.getAlleles());
+		this.size = tspGene.getSize();
+		this.decodeGene();
 	}
 
 	public TSPGene() {}
 
 	@Override
-	protected void initializeGene() {}
-
-	@Override
-	public void decodeGene() {}
+	public void decodeGene() {
+		this.decodedValue = this.alleles.get(0);
+	}
 
 	@Override
 	public Gene<Integer> createGene(List<Integer> alleles) { return null; }
@@ -41,8 +41,7 @@ public class TSPGene extends Gene<Integer>{
 	@Override
 	public void mutate(int pos) {}
 
-	public int getPos() {
-		return this.pos;
-	}
+	@Override
+	protected void initializeGene() {}
 
 }
