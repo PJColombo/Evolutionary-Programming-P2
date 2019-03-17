@@ -9,53 +9,61 @@ import application.model.p1.model.genetic_algorithm.solution.genes.TSPGene;
 
 public class TSPFunction extends Chromosome<TSPGene>{
 	private int[][] distances; 
+	private int dSize;
 	private int initialFinalCity;
 
 	
-	public TSPFunction(int size, int[][] distances, int initialFinalCity) {
+	public TSPFunction(Boolean maximize, int size, int[][] distances, int initialFinalCity) {
 		super();
 		this.distances = distances;
-		this.genes = new ArrayList<TSPGene>(size);
+		this.dSize = size;
+		this.genes = new ArrayList<TSPGene>();
 		this.chromosomeLength = size - 1;
 		this.initialFinalCity = initialFinalCity;
-		this.maximize = false;
-		this.createRoute(size);
-		size -= 1;
-		for (int i = 0; i < size; i++) {
-			System.out.println("Ciudad " + this.genes.get(i).getDecodedValue());
-		}
+		this.maximize = maximize;
+		this.genes.add(new TSPGene(distances, size, initialFinalCity));
 		
 		System.out.println("-------------------------------------------------");
 		
 		this.fitness = this.calculateFitness();
+		this.calculateFenotype();
 		System.out.println("Fitness:" + this.fitness);
 		
 	}
 	
-	private void createRoute(int distancesSize) {
-		ArrayList<Integer> cities = new ArrayList<>(distancesSize);
-		int randPos;
-
-		for(int i = 0; i < distancesSize; i++) {
-			if(i != initialFinalCity)
-				cities.add(i);
-		}
+	public TSPFunction(int[][] distances, int dSize, int initialFinalCity, boolean maximize, 
+			List<? extends Gene<?>> genes, int chromosomeLength) {
+		super();
+		this.maximize = maximize;
+		this.distances = distances;
+		this.dSize = dSize;
+		this.initialFinalCity = initialFinalCity;
 		
-		for(int i = 0; i < distancesSize - 1; i++) {
-			randPos = ThreadLocalRandom.current().nextInt(0, cities.size());
-			genes.add(new TSPGene(cities.get(randPos)));
-			cities.remove(randPos);
-		}
+		this.genes = new ArrayList<TSPGene>();
+		for (Gene<?> g : genes) 
+			this.genes.add((TSPGene) g.clone());
+		
+		this.chromosomeLength = chromosomeLength;
+		this.fitness = this.calculateFitness();
+		this.calculateFenotype();
 	}
 	
 	public TSPFunction(TSPFunction tspFunction) {
-		this.genes = new ArrayList<>(tspFunction.getGenes());
+		this.distances = tspFunction.getDistances();
+		this.initialFinalCity = tspFunction.getInitialFinalCity();
+
+		this.genes = new ArrayList<TSPGene>(tspFunction.getGenes().size());
+		for (TSPGene g : genes) 
+			this.genes.add((TSPGene) g.clone());
+		
 		this.chromosomeLength = tspFunction.chromosomeLength;
-		this.initialFinalCity = tspFunction.initialFinalCity;
-		this.fitness = tspFunction.getFitness();
-		
-		//TODO complete tspfunction cloning
-		
+		this.maximize = tspFunction.isMaximize();
+		this.elite = tspFunction.isElite();
+		this.normalizedFitness = tspFunction.getNormalizedFitness();
+		this.fenotype = tspFunction.getFenotype();
+		this.score = tspFunction.getScore();
+		this.accuScore = tspFunction.getAccuScore();
+		this.fitness = tspFunction.getFitness();		
 	}
 
 	@Override
@@ -65,7 +73,8 @@ public class TSPFunction extends Chromosome<TSPGene>{
 	protected double calculateFitness() {
 		double fitness = 0;
 		double coste;
-		int firstCity = (int) genes.get(0).getDecodedValue(), lastCity;
+		List<Integer> alleles = genes.get(0).getAlleles();
+		int firstCity = (int) alleles.get(0), lastCity;
 		int cityI, cityJ;
 		if(initialFinalCity > firstCity)
 			fitness += coste = distances[initialFinalCity][firstCity];
@@ -74,21 +83,19 @@ public class TSPFunction extends Chromosome<TSPGene>{
 		
 		System.out.println("De " + initialFinalCity + "hasta " + firstCity + " tiene un coste de : " + coste);
 		for(int i = 0, j =  i + 1; i < chromosomeLength - 1; i++, j++) {
-			cityI = (int) genes.get(i).getDecodedValue();
-			cityJ = (int) genes.get(j).getDecodedValue();
+			cityI = (int) alleles.get(i);
+			cityJ = (int) alleles.get(j);
 			
-			if(cityI < cityJ) {
+			if(cityI < cityJ)
 				coste = distances[cityJ][cityI];
-			}
-			else {
+			else
 				coste = distances[cityI][cityJ];
-			}
 			
 			System.out.println("De " + cityI + "hasta " + cityJ + " tiene un coste de : " + coste);
 			fitness += coste;
 		}
 		
-		lastCity = (int) genes.get(genes.size() - 1).getDecodedValue();
+		lastCity = (int) alleles.get(alleles.size() - 1);
 		
 		if(lastCity > initialFinalCity)
 			fitness +=  coste = distances[lastCity][initialFinalCity];
@@ -100,11 +107,34 @@ public class TSPFunction extends Chromosome<TSPGene>{
 	}
 
 	@Override
-	public <U> Chromosome<TSPGene> createChildren(List<Gene<U>> childGenes) { return null; }
+	public <U> Chromosome<TSPGene> createChildren(List<Gene<U>> childGenes) { 
+		return new TSPFunction(this.distances, this.dSize, this.initialFinalCity,
+				this.maximize, childGenes, this.chromosomeLength);
+	}
 
 	@Override
 	public Chromosome<TSPGene> clone() {
 		return new TSPFunction(this);
+	}
+
+	public int[][] getDistances() {
+		return distances;
+	}
+
+	public int getInitialFinalCity() {
+		return initialFinalCity;
+	}
+	
+	@Override
+	public String toString() {
+		return "TSPFunction {"
+				+ " Fenotype: " + fenotype
+				+ " | Fitness: " + fitness
+				+ " | Score: " + score
+				+ " | AccuScore: " + accuScore
+				+ " | decodedGene1 : " + genes.get(0).getDecodedValue()
+				+ " | decodedGene2 : " + genes.get(1).getDecodedValue()
+				+ "} ";
 	}
 
 }
