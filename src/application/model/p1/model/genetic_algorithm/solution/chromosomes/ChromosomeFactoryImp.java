@@ -23,7 +23,7 @@ public class ChromosomeFactoryImp extends ChromosomeFactory {
 		case "realfunction4" :
 			return new RealFunction4(genesNumber, tolerance, maximize, intervals);
 		case "tsp":
-			return new TSPFunction(distancesSize, distances, initialFinalCity);
+			return new TSPFunction(maximize, distancesSize, distances, initialFinalCity);
 		default:
 			//Generate function 1 as default function. 
 			List<Pair<Double, Double>> defaultIntervals = new ArrayList<>(2);

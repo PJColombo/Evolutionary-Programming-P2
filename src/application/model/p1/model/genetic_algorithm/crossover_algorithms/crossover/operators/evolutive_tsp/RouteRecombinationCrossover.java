@@ -1,11 +1,16 @@
-package application.model.p1.model.genetic_algorithm.crossover_algorithms.crossover.operators.evolutive;
+package application.model.p1.model.genetic_algorithm.crossover_algorithms.crossover.operators.evolutive_tsp;
 
 import application.model.p1.model.genetic_algorithm.crossover_algorithms.crossover.CrossoverOperator;
 import application.model.p1.model.genetic_algorithm.solution.chromosomes.Chromosome;
 import application.model.p1.model.genetic_algorithm.solution.genes.Gene;
 import application.model.p1_utils.Pair;
 
-public class CycleCrossover extends CrossoverOperator {
+public class RouteRecombinationCrossover extends CrossoverOperator {
+
+	public RouteRecombinationCrossover(double crossoverProbability) {
+		super(crossoverProbability);
+		// TODO Auto-generated constructor stub
+	}
 
 	@Override
 	public <T> Pair<? extends Chromosome<? extends Gene<T>>, ? extends Chromosome<? extends Gene<T>>> chromosomeCrossover(
