@@ -65,8 +65,6 @@ public class TSPGene extends Gene<Integer>{
 	@Override
 	public void decodeGene() {
 		decodedValue = 0;
-		for (Integer a : alleles)
-			decodedValue += a;
 	}
 
 	@Override
@@ -93,6 +91,17 @@ public class TSPGene extends Gene<Integer>{
 
 	public int getInitialFinalCity() {
 		return initialFinalCity;
+	}
+
+	@Override
+	public String toString() {
+		String route = "";
+		route += initialFinalCity + "-> ";
+		for (Integer a : alleles)
+			route += a + " -> ";
+		route += initialFinalCity;
+		
+		return "{initialFinalCity=" + initialFinalCity + " | Route: " + route + "}";
 	}
 
 	

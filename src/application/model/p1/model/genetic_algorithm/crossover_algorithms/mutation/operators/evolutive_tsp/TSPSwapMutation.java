@@ -7,9 +7,9 @@ import application.model.p1.model.genetic_algorithm.crossover_algorithms.mutatio
 import application.model.p1.model.genetic_algorithm.solution.chromosomes.Chromosome;
 import application.model.p1.model.genetic_algorithm.solution.genes.Gene;
 
-public class SwapMutation extends MutationOperator {
+public class TSPSwapMutation extends MutationOperator {
 
-	public SwapMutation(double mutationProbability) {
+	public TSPSwapMutation(double mutationProbability) {
 		super(mutationProbability);
 	}
 

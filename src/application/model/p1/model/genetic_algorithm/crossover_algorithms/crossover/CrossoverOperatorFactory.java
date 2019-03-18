@@ -11,6 +11,6 @@ public abstract class CrossoverOperatorFactory{
 	}
 	
 	
-	public abstract CrossoverOperator selectAlgorithm(String type, double crossoverProbability, Integer crossPoints);
+	public abstract CrossoverOperator selectAlgorithm(String type, double crossoverProbability, Integer crossPoints, Integer initialFinalCity);
 	
 }

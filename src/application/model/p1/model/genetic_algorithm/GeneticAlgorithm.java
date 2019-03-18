@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Random;
+import java.util.concurrent.ThreadLocalRandom;
 
 import application.model.p1.model.genetic_algorithm.crossover_algorithms.crossover.CrossoverOperator;
 import application.model.p1.model.genetic_algorithm.crossover_algorithms.crossover.CrossoverOperatorFactory;
@@ -147,7 +148,11 @@ public class GeneticAlgorithm {
 		} */
 		
 		for (int i = 0; i < this.popSize; i++)
-			this.population.add(ChromosomeFactory.getInstance().createChromosome(this.function, this.tolerance, null, null, this.nVariables, TSPDistances._DISTANCES, TSPDistances.size, 25));
+			this.population.add(ChromosomeFactory.getInstance().createChromosome(this.function, this.tolerance, false, null, this.nVariables, TSPDistances._DISTANCES, TSPDistances.size, 25));
+		
+		for(int i = 0; i < this.popSize; i++) {
+			System.out.println(this.population.get(i));
+		}
 	}
 	
 	public Stat evaluatePopulation() {
@@ -213,12 +218,11 @@ public class GeneticAlgorithm {
 	private void reproduce() {
 		Pair<? extends Chromosome<? extends Gene<?>>, ? extends Chromosome<? extends Gene<?>>> childChromosomes = new Pair<>();
 		List<Integer> selectedCrossoverIndexSol = new ArrayList<>();
-		CrossoverOperator crossOperator = CrossoverOperatorFactory.getInstance().selectAlgorithm(this.crossoverOperator, this.crossoverProbability, this.crosspointsNum);
-		Random r = new Random();
+		CrossoverOperator crossOperator = CrossoverOperatorFactory.getInstance().selectAlgorithm(this.crossoverOperator, this.crossoverProbability, this.crosspointsNum, 25);
 		double prop; 
 		//Get selected solutions.
 		for (int i = 0; i < this.population.size(); i++) {
-			prop = r.nextDouble();
+			prop = ThreadLocalRandom.current().nextDouble();
 			if(prop < this.crossoverProbability)
 				selectedCrossoverIndexSol.add(i);
 		}

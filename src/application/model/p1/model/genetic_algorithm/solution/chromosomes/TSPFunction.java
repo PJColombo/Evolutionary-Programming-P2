@@ -50,10 +50,11 @@ public class TSPFunction extends Chromosome<TSPGene>{
 	
 	public TSPFunction(TSPFunction tspFunction) {
 		this.distances = tspFunction.getDistances();
+		this.dSize = tspFunction.getdSize();
 		this.initialFinalCity = tspFunction.getInitialFinalCity();
 
 		this.genes = new ArrayList<TSPGene>(tspFunction.getGenes().size());
-		for (TSPGene g : genes) 
+		for (TSPGene g : tspFunction.getGenes()) 
 			this.genes.add((TSPGene) g.clone());
 		
 		this.chromosomeLength = tspFunction.chromosomeLength;
@@ -97,6 +98,8 @@ public class TSPFunction extends Chromosome<TSPGene>{
 		
 		lastCity = (int) alleles.get(alleles.size() - 1);
 		
+		System.out.println("last city " + lastCity);
+		System.out.println("initialFinalCity " + initialFinalCity);
 		if(lastCity > initialFinalCity)
 			fitness +=  coste = distances[lastCity][initialFinalCity];
 		else 
@@ -120,6 +123,12 @@ public class TSPFunction extends Chromosome<TSPGene>{
 	public int[][] getDistances() {
 		return distances;
 	}
+	
+	
+
+	public int getdSize() {
+		return dSize;
+	}
 
 	public int getInitialFinalCity() {
 		return initialFinalCity;
@@ -133,7 +142,7 @@ public class TSPFunction extends Chromosome<TSPGene>{
 				+ " | Score: " + score
 				+ " | AccuScore: " + accuScore
 				+ " | decodedGene1 : " + genes.get(0).getDecodedValue()
-				+ " | decodedGene2 : " + genes.get(1).getDecodedValue()
+				+ " | gene: " + genes.get(0)
 				+ "} ";
 	}
 
