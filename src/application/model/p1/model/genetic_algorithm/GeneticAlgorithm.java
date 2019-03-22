@@ -1,14 +1,9 @@
 package application.model.p1.model.genetic_algorithm;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 
 import application.model.p1.model.genetic_algorithm.crossover_algorithms.crossover.CrossoverOperator;
@@ -210,7 +205,8 @@ public class GeneticAlgorithm {
 	@SuppressWarnings("unchecked")
 	private void select() {
 		SelectionAlgorithmFactory algFactory = SelectionAlgorithmFactory.getInstance();
-		SelectionAlgorithm alg = algFactory.getSelectionAlgorithm(this.selectionAlgorithm, 0, null);
+		//TODO Add additional selection algorithm field to UI (Rest Selection).
+		SelectionAlgorithm alg = algFactory.getSelectionAlgorithm(this.selectionAlgorithm, 0, null, "roullete");
 		this.population = (List<Chromosome<? extends Gene<?>>>) alg.selection(this.population);
 		
 	}
