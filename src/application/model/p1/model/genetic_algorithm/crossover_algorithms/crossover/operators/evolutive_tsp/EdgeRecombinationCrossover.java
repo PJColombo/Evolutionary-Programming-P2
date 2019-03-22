@@ -30,6 +30,7 @@ public class EdgeRecombinationCrossover extends CrossoverOperator {
 				childGenes1 = new ArrayList<Gene<T>>(parent1.getGenes().size()), childGenes2 = new ArrayList<Gene<T>>(parent1.getGenes().size());
 		List<T> parentAlleles1, parentAlleles2, childAlleles1, childAlleles2;
 		ArrayList<HashSet<T>> neighbourList1 = this.createNeighbourList(parentGenes1, parentGenes2), neighbourList2 = new ArrayList<>(neighbourList1);
+		//data structure 
 		HashSet<Integer> checkList1, checkList2;
 		Integer initialNode, currNode; 
 		boolean firstChildCompleted, secondChildCompleted;
@@ -53,8 +54,11 @@ public class EdgeRecombinationCrossover extends CrossoverOperator {
 			while(!firstChildCompleted && !secondChildCompleted) {
 				if(!firstChildCompleted) {
 					currNode = (int) childAlleles1.get(childAlleles1.size() - 1);
+					
 					this.crossNode(currNode, neighbourList1);
+					
 					currNode = this.pickSmallestNeighbour(currNode, neighbourList1);
+					
 					while(currNode == null) {
 						//size + 1 because alleles only have N - 1 cities (doesn't have initial/final city).
 						currNode = ThreadLocalRandom.current().nextInt(0, parentAlleles1.size() + 1);
@@ -68,8 +72,11 @@ public class EdgeRecombinationCrossover extends CrossoverOperator {
 				
 				if(!secondChildCompleted) {
 					currNode = (int) childAlleles2.get(childAlleles2.size() - 1);
+					
 					this.crossNode(currNode, neighbourList2);
+					
 					currNode = this.pickSmallestNeighbour(currNode, neighbourList2);
+					
 					while(currNode == null) {
 						currNode = ThreadLocalRandom.current().nextInt(0, parentAlleles2.size() + 1);
 						currNode = currNode == this.initialFinalCity || checkList2.contains(currNode) ? null : currNode;

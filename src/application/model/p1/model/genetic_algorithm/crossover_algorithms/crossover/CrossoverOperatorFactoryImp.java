@@ -17,6 +17,7 @@ public class CrossoverOperatorFactoryImp extends CrossoverOperatorFactory {
 			return new MultiPointCrossover(crossoverProbability, crossPoints);
 		else if(type.equalsIgnoreCase("onepoint"))
 			return new OnePointCrossover(crossoverProbability);
+		//TSP crossover operators 
 		else if(type.equalsIgnoreCase("cycle"))
 			return new CycleCrossover(crossoverProbability);
 		else if(type.equalsIgnoreCase("erx"))

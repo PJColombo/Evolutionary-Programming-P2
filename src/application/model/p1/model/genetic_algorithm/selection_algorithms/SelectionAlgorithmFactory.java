@@ -8,5 +8,5 @@ public abstract class SelectionAlgorithmFactory {
 			SelectionAlgorithmFactory.selectionAlgorithFactory = new SelectionAlgorithmFactoryImp();
 		return SelectionAlgorithmFactory.selectionAlgorithFactory;
 	}
-	public abstract SelectionAlgorithm getSelectionAlgorithm(String algorithm, int participants);
+	public abstract SelectionAlgorithm getSelectionAlgorithm(String algorithm, int participants, Double truncPercentage);
 }

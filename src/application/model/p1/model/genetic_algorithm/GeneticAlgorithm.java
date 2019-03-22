@@ -210,7 +210,7 @@ public class GeneticAlgorithm {
 	@SuppressWarnings("unchecked")
 	private void select() {
 		SelectionAlgorithmFactory algFactory = SelectionAlgorithmFactory.getInstance();
-		SelectionAlgorithm alg = algFactory.getSelectionAlgorithm(this.selectionAlgorithm, 0);
+		SelectionAlgorithm alg = algFactory.getSelectionAlgorithm(this.selectionAlgorithm, 0, null);
 		this.population = (List<Chromosome<? extends Gene<?>>>) alg.selection(this.population);
 		
 	}

@@ -76,6 +76,27 @@ public class ChartController implements Initializable{
     @FXML
     private TextField nCrosspointsTF;
     
+    
+    //P2 Opt
+    @FXML
+    private TextField crossIntervalMinTF;
+
+    @FXML
+    private TextField crossIntervalMaxTF;
+    
+    @FXML
+    private TextField mutIntervalMinTF;
+    
+    @FXML
+    private TextField mutIntervalMaxTF;
+    
+    @FXML
+    private TextField elitismPercentageTF;
+    
+    @FXML
+    private Slider elitPerSlid;
+    
+    
     private GeneticAlgorithm ge = null;
     private Double[] arg = new Double[6];
     
@@ -128,11 +149,21 @@ public class ChartController implements Initializable{
         
         crossPerSlid.valueProperty().addListener((obs, oldValue, newValue) -> {
         	NumberFormat nf = NumberFormat.getNumberInstance(Locale.ENGLISH);
-        	DecimalFormat df = (DecimalFormat)nf;
+        	DecimalFormat df = (DecimalFormat) nf;
 
         	crossPercentage.setText(df.format(newValue.doubleValue()));
         });
-                
+        
+        
+        this.elitismPercentageTF.setText("0.2");
+        
+        elitPerSlid.valueProperty().addListener((obs, oldValue, newValue) -> {
+        	NumberFormat nf = NumberFormat.getNumberInstance(Locale.ENGLISH);
+        	DecimalFormat df = (DecimalFormat) nf;
+        	
+        	elitismPercentageTF.setText(df.format(newValue.doubleValue()));
+        });
+        
     }
 
     public Double[] getData(){
@@ -279,6 +310,8 @@ public class ChartController implements Initializable{
         this.selAlgorithm.getSelectionModel().select(0);
         this.crossAlgorithm.getSelectionModel().select(2);
         this.mutationAlgorithm.getSelectionModel().select(0);
+        
+        this.elitPerSlid.setValue(0.20);
         
     }
 
