@@ -2,7 +2,6 @@ package application.model.p1.model.genetic_algorithm.solution.chromosomes;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.ThreadLocalRandom;
 
 import application.model.p1.model.genetic_algorithm.solution.genes.Gene;
 import application.model.p1.model.genetic_algorithm.solution.genes.TSPGene;
@@ -20,7 +19,10 @@ public class TSPFunction extends Chromosome<TSPGene>{
 		this.genes = new ArrayList<TSPGene>();
 		this.chromosomeLength = size - 1;
 		this.initialFinalCity = initialFinalCity;
-		this.maximize = maximize;
+		if(maximize == null)
+			this.maximize = false;
+		else
+			this.maximize = true;
 		this.genes.add(new TSPGene(distances, size, initialFinalCity));
 		
 		System.out.println("-------------------------------------------------");
@@ -31,10 +33,14 @@ public class TSPFunction extends Chromosome<TSPGene>{
 		
 	}
 	
-	public TSPFunction(int[][] distances, int dSize, int initialFinalCity, boolean maximize, 
+	public TSPFunction(int[][] distances, int dSize, int initialFinalCity, Boolean maximize, 
 			List<? extends Gene<?>> genes, int chromosomeLength) {
 		super();
-		this.maximize = maximize;
+		if(maximize == null)
+			this.maximize = false;
+		else
+			this.maximize = maximize;
+		System.out.println("Maximize: " + this.maximize);
 		this.distances = distances;
 		this.dSize = dSize;
 		this.initialFinalCity = initialFinalCity;

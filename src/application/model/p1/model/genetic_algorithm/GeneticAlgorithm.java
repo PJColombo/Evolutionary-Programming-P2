@@ -123,7 +123,7 @@ public class GeneticAlgorithm {
 			if(this.generations == this.maxGenNumber) {		
 				System.out.println("Generation " + this.generations + "|| " + s);
 			}
-				
+			System.out.println(this.generations);
 			stats.add(s);
 		}
 		
@@ -143,7 +143,7 @@ public class GeneticAlgorithm {
 		} */
 		
 		for (int i = 0; i < this.popSize; i++)
-			this.population.add(ChromosomeFactory.getInstance().createChromosome(this.function, this.tolerance, false, null, this.nVariables, TSPDistances._DISTANCES, TSPDistances.size, 25));
+			this.population.add(ChromosomeFactory.getInstance().createChromosome(this.function, this.tolerance, null, null, this.nVariables, TSPDistances._DISTANCES, TSPDistances.size, 25));
 		
 		for(int i = 0; i < this.popSize; i++) {
 			System.out.println(this.population.get(i));

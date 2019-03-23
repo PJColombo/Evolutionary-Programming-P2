@@ -29,10 +29,7 @@ public class TruncationSelection implements SelectionAlgorithm {
 		else
 			Collections.sort(population);
 
-		System.out.println("-----------------------");
-		for (Chromosome<? extends Gene<T>> c1 : population) {
-			System.out.println(c1);
-		}
+
 		while(!isFilled) {		
 			c = population.get(i);
 			while(selectionCounter < selectionLimit && !isFilled) {				
@@ -43,11 +40,7 @@ public class TruncationSelection implements SelectionAlgorithm {
 			selectionCounter = 0;
 			i++;
 		}
-		System.out.println(newPopulation.size());
-		System.out.println("-----------------------");
-		for (Chromosome<? extends Gene<T>> c1 : newPopulation) {
-			System.out.println(c1);
-		}
+
 		return newPopulation;
 	}
 

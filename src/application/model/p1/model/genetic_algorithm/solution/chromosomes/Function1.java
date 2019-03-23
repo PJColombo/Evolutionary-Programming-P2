@@ -44,6 +44,7 @@ public class Function1 extends Chromosome<BinaryGene>{
 	public Function1(double tolerance, Boolean maximize, List<Pair<Double, Double>> intervals) {
 		super();
 		this.tolerance = tolerance;
+		System.out.println(maximize);
 		this.maximize = maximize != null ? maximize : true;
 		this.genes = new ArrayList<BinaryGene>(2);
 		List<Pair<Double, Double>> inter;
