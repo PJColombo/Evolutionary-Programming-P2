@@ -154,10 +154,10 @@ public class ChartController implements Initializable{
     public ChartController(){}
     
     
-    private final ObservableList<String> listFunctions = FXCollections.observableArrayList("Function1", "Function2", "Function3", "BinaryFunction4" , "RealFunction4");
-    private final ObservableList<String> listCrossAlgorithms = FXCollections.observableArrayList("Multipoint", "Uniform", "Onepoint");
+    private final ObservableList<String> listFunctions = FXCollections.observableArrayList("Function1", "Function2", "Function3", "BinaryFunction4" , "RealFunction4", "TSP");
+    private final ObservableList<String> listCrossAlgorithms = FXCollections.observableArrayList("Multipoint", "Uniform", "Onepoint", "cycle", "erx", "pmx");
     private final ObservableList<String> listSelAlgorithms = FXCollections.observableArrayList("Roulette", "Tournament", "Probabilistic_tournament", "Stochastic", "Truncation");
-    private final ObservableList<String> listMutationAlgorithms = FXCollections.observableArrayList("Conventional", "Inversion", "Swap");
+    private final ObservableList<String> listMutationAlgorithms = FXCollections.observableArrayList("Conventional", "Inversion", "Swap", "reversal", "tsp_swap");
     
     private final ObservableList<String> showFunctionList = FXCollections.observableArrayList("General best individual", "Generation best individual", "Average generation fitness");
     

@@ -25,11 +25,9 @@ public class TSPFunction extends Chromosome<TSPGene>{
 			this.maximize = true;
 		this.genes.add(new TSPGene(distances, size, initialFinalCity));
 		
-		System.out.println("-------------------------------------------------");
 		
 		this.fitness = this.calculateFitness();
 		this.calculateFenotype();
-		System.out.println("Fitness:" + this.fitness);
 		
 	}
 	
@@ -40,7 +38,6 @@ public class TSPFunction extends Chromosome<TSPGene>{
 			this.maximize = false;
 		else
 			this.maximize = maximize;
-		System.out.println("Maximize: " + this.maximize);
 		this.distances = distances;
 		this.dSize = dSize;
 		this.initialFinalCity = initialFinalCity;
@@ -88,7 +85,8 @@ public class TSPFunction extends Chromosome<TSPGene>{
 		else
 			fitness += coste = distances[firstCity][initialFinalCity];
 		
-		System.out.println("De " + initialFinalCity + "hasta " + firstCity + " tiene un coste de : " + coste);
+		//System.out.println("=========================================================0");
+		//System.out.println("De " + initialFinalCity + "hasta " + firstCity + " tiene un coste de : " + coste);
 		for(int i = 0, j =  i + 1; i < chromosomeLength - 1; i++, j++) {
 			cityI = (int) alleles.get(i);
 			cityJ = (int) alleles.get(j);
@@ -98,20 +96,18 @@ public class TSPFunction extends Chromosome<TSPGene>{
 			else
 				coste = distances[cityI][cityJ];
 			
-			System.out.println("De " + cityI + "hasta " + cityJ + " tiene un coste de : " + coste);
-			fitness += coste;
+			//System.out.println("De " + cityI + "hasta " + cityJ + " tiene un coste de : " + coste);
+				fitness += coste;				
 		}
 		
 		lastCity = (int) alleles.get(alleles.size() - 1);
 		
-		System.out.println("last city " + lastCity);
-		System.out.println("initialFinalCity " + initialFinalCity);
 		if(lastCity > initialFinalCity)
 			fitness +=  coste = distances[lastCity][initialFinalCity];
 		else 
 			fitness += coste = distances[initialFinalCity][lastCity];
 		
-		System.out.println("De " + lastCity + "hasta " + initialFinalCity + " tiene un coste de : " + coste);
+		//System.out.println("De " + lastCity + "hasta " + initialFinalCity + " tiene un coste de : " + coste);
 		return fitness;
 	}
 

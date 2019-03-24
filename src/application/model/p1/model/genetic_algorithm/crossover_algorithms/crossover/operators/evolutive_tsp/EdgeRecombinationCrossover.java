@@ -46,10 +46,14 @@ public class EdgeRecombinationCrossover extends CrossoverOperator {
 			if(initialNode == 0) {
 				childAlleles1.add(parentAlleles1.get(0));
 				childAlleles2.add(parentAlleles2.get(0));				
+				checkList1.add((Integer) parentAlleles1.get(0));
+				checkList2.add((Integer) parentAlleles2.get(0));
 			}
 			else {
-				childAlleles1.add(parentAlleles2.get(initialNode));
-				childAlleles2.add(parentAlleles1.get(initialNode));				
+				childAlleles1.add(parentAlleles2.get(0));
+				childAlleles2.add(parentAlleles1.get(0));	
+				checkList1.add((Integer) parentAlleles2.get(0));
+				checkList2.add((Integer) parentAlleles1.get(0));
 			}
 			while(!firstChildCompleted && !secondChildCompleted) {
 				if(!firstChildCompleted) {
@@ -90,6 +94,10 @@ public class EdgeRecombinationCrossover extends CrossoverOperator {
 			childGenes1.add(parentGenes1.get(i).createGene(childAlleles1));
 			childGenes2.add(parentGenes2.get(i).createGene(childAlleles2));
 		}
+		
+		this.validRoute(childGenes1.get(0).getAlleles());
+		this.validRoute(childGenes2.get(0).getAlleles());
+		
 		//Create child chromosomes.
 		childChromosomes.setLeftElement(parent1.createChildren(childGenes1));
 		childChromosomes.setRightElement(parent2.createChildren(childGenes2));
@@ -175,5 +183,22 @@ public class EdgeRecombinationCrossover extends CrossoverOperator {
 			}
 		}
 		return neighbourList;
+	}
+	
+	private <T> void validRoute(List<T> route) {
+		boolean valid = true;
+		ArrayList<Boolean> cities = new ArrayList<>(28);
+		for(int i = 0; i < 28; i++) {
+			cities.add(false);
+		}
+		int i = 0;
+		for (T c : route) {
+			if(!cities.get((int) c))
+					cities.set((int) c, true);
+			else {
+				System.out.println("Citie " + c + " already exists in pos: " + i);
+			}
+			i++;
+		}
 	}
 }

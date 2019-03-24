@@ -27,7 +27,8 @@ public class PartiallyMappedCrossover extends CrossoverOperator {
 				childGenes1 = new ArrayList<Gene<T>>(parent1.getGenes().size()), childGenes2 = new ArrayList<Gene<T>>(parent1.getGenes().size());
 		List<T> parentAlleles1, parentAlleles2, childAlleles1, childAlleles2;
 		int cp1, cp2, aux;
-		int ind;
+		int ind, auxInd;
+		T val;
 		//Generate crosspoints sections.
 		cp1 = ThreadLocalRandom.current().nextInt(1, parent1.getChromosomeLength());
 		cp2 = ThreadLocalRandom.current().nextInt(1, parent1.getChromosomeLength());
@@ -38,28 +39,42 @@ public class PartiallyMappedCrossover extends CrossoverOperator {
 			cp1 = cp2;
 			cp2 = aux;
 		}
-		segment1 = parentGenes2.get(0).getAlleles().subList(cp1, cp2 + 1);
-		segment2 = parentGenes1.get(0).getAlleles().subList(cp1, cp2 + 1);
+		System.out.println("cp1 " + cp1);
+		System.out.println("cp2 " + cp2);
+		segment1 = new ArrayList<>(parentGenes2.get(0).getAlleles().subList(cp1 , cp2 + 1));
+		segment2 = new ArrayList<>(parentGenes1.get(0).getAlleles().subList(cp1 , cp2 + 1));
 		
 		for(int i = 0; i < parentGenes1.size(); i++) {
 			parentAlleles1 = parentGenes1.get(i).getAlleles();
 			parentAlleles2 = parentGenes2.get(i).getAlleles();
+
 			childAlleles1 = new ArrayList<>(parentAlleles1.size());
 			childAlleles2 = new ArrayList<>(parentAlleles2.size());			
 			for(int j = 0; j < parentAlleles1.size(); j++) {
 				if(j >= cp1 && j <= cp2) {
-					childAlleles1.add(parentAlleles1.get(j));
-					childAlleles2.add(parentAlleles2.get(j));
+					childAlleles1.add(parentAlleles2.get(j));
+					childAlleles2.add(parentAlleles1.get(j));
 				}
 				else {
 					ind = segment1.indexOf(parentAlleles1.get(j));
-					if(ind > -1)
-						childAlleles1.add(segment2.get(ind));
+					if(ind > -1) {
+						do {
+							val =  segment2.get(ind);
+							ind = segment1.indexOf(val);
+						}while(ind > - 1);
+						childAlleles1.add(val);
+					}
 					else
 						childAlleles1.add(parentAlleles1.get(j));
 					ind = segment2.indexOf(parentAlleles2.get(j));
-					if(ind > -1)
-						childAlleles2.add(segment1.get(ind));
+					if(ind > -1) {
+						//if oposite segment value is in the actual segment take another value 
+						do {
+							val =  segment1.get(ind);
+							ind = segment2.indexOf(val);
+						}while(ind > - 1);
+						childAlleles2.add(val);
+					}
 					else
 						childAlleles2.add(parentAlleles2.get(j));					
 				}
