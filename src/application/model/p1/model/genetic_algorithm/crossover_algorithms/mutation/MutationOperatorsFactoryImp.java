@@ -3,6 +3,8 @@ package application.model.p1.model.genetic_algorithm.crossover_algorithms.mutati
 import application.model.p1.model.genetic_algorithm.crossover_algorithms.mutation.operators.ConventionalMutation;
 import application.model.p1.model.genetic_algorithm.crossover_algorithms.mutation.operators.InversionMutation;
 import application.model.p1.model.genetic_algorithm.crossover_algorithms.mutation.operators.SwapMutation;
+import application.model.p1.model.genetic_algorithm.crossover_algorithms.mutation.operators.evolutive_tsp.HeuristicMutation;
+import application.model.p1.model.genetic_algorithm.crossover_algorithms.mutation.operators.evolutive_tsp.InsertionMutation;
 import application.model.p1.model.genetic_algorithm.crossover_algorithms.mutation.operators.evolutive_tsp.ReversalMutation;
 import application.model.p1.model.genetic_algorithm.crossover_algorithms.mutation.operators.evolutive_tsp.TSPSwapMutation;
 
@@ -22,6 +24,10 @@ public class MutationOperatorsFactoryImp extends MutationOperatorsFactory {
 				return new ReversalMutation(mutationProbability);
 			case "tsp_swap":
 				return new TSPSwapMutation(mutationProbability);
+			case "ins_swap":
+				return new InsertionMutation(mutationProbability);
+			case "hrt_swap":
+				return new HeuristicMutation(mutationProbability);
 			default:
 				return new ConventionalMutation(mutationProbability);
 		}

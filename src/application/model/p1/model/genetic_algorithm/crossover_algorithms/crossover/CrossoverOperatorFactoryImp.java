@@ -5,7 +5,10 @@ import application.model.p1.model.genetic_algorithm.crossover_algorithms.crossov
 import application.model.p1.model.genetic_algorithm.crossover_algorithms.crossover.operators.UniformCrossover;
 import application.model.p1.model.genetic_algorithm.crossover_algorithms.crossover.operators.evolutive_tsp.CycleCrossover;
 import application.model.p1.model.genetic_algorithm.crossover_algorithms.crossover.operators.evolutive_tsp.EdgeRecombinationCrossover;
+import application.model.p1.model.genetic_algorithm.crossover_algorithms.crossover.operators.evolutive_tsp.OrdinalCrossover;
 import application.model.p1.model.genetic_algorithm.crossover_algorithms.crossover.operators.evolutive_tsp.PartiallyMappedCrossover;
+import application.model.p1.model.genetic_algorithm.crossover_algorithms.crossover.operators.evolutive_tsp.PositionOrderCrossover;
+import application.model.p1.model.genetic_algorithm.crossover_algorithms.crossover.operators.evolutive_tsp.PriorityOrderCrossover;
 
 public class CrossoverOperatorFactoryImp extends CrossoverOperatorFactory {
 	
@@ -24,6 +27,12 @@ public class CrossoverOperatorFactoryImp extends CrossoverOperatorFactory {
 			return new EdgeRecombinationCrossover(crossoverProbability, initialFinalCity);
 		else if(type.equalsIgnoreCase("pmx"))
 			return new PartiallyMappedCrossover(crossoverProbability);
+		else if(type.equalsIgnoreCase("ocx"))
+			return new OrdinalCrossover(crossoverProbability);
+		else if(type.equalsIgnoreCase("prox"))
+			return new PriorityOrderCrossover(crossoverProbability);
+		else if(type.equalsIgnoreCase("poox"))
+			return new PositionOrderCrossover(crossoverProbability);
 		else
 			return new OnePointCrossover(crossoverProbability);
 		
