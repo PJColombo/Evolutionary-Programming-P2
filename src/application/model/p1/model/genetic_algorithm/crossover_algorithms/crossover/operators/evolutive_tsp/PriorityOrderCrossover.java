@@ -49,6 +49,7 @@ public class PriorityOrderCrossover extends CrossoverOperator {
 			pos = ThreadLocalRandom.current().nextInt(0, parent1.getChromosomeLength() - 1);
 			if(helper.add(pos)) 
 				values.add(childAlleles1.get(pos));
+			i++;
 		}
 		
 		Iterator<T> valuesIter = values.iterator();
