@@ -27,69 +27,47 @@ public class PriorityOrderCrossover extends CrossoverOperator {
 		@SuppressWarnings("unchecked")
 		List<Gene<T>> parentGenes1 = (List<Gene<T>>) parent1.getGenes(), parentGenes2 = (List<Gene<T>>) parent2.getGenes(), 
 				childGenes1 = new ArrayList<Gene<T>>(parent1.getGenes().size()), childGenes2 = new ArrayList<Gene<T>>(parent1.getGenes().size());
-		
-		HashMap<Integer,Integer> hash = new HashMap<Integer,Integer>();
+			
+		TreeSet<Integer> posInParent1 = new TreeSet<Integer>();
+		TreeSet<Integer> posInParent2 = new TreeSet<Integer>();
 		TreeSet<Integer> helper = new TreeSet<Integer>();
-		List<T> childAlleles1 = new ArrayList<>(parent1.getGenes().get(0).getAlleles());
-		List<T> childAlleles2 = new ArrayList<>(parent2.getGenes().get(0).getAlleles());
-		List<T> childAlleles1Aux = new ArrayList<>(parent1.getGenes().get(0).getAlleles());
-		List<T> childAlleles2Aux = new ArrayList<>(parent2.getGenes().get(0).getAlleles());
-		List<T> aux = new ArrayList<>(parent2.getGenes().get(0).getAlleles());
-		List<T> values = new ArrayList<>();
-		int i = 0, pos, posAux, randomPos = ThreadLocalRandom.current().nextInt(1, parent1.getChromosomeLength() + 1);
-		T alleleAux;
-		
-		System.out.println("-------- Padre 1 ---------");
-		System.out.println(childAlleles1.toString());
-		System.out.println("-------- Padre 2 ---------");
-		System.out.println(childAlleles2.toString());
-		
+		List<T> childAlleles1 = new ArrayList<>(parent2.getGenes().get(0).getAlleles());
+		List<T> childAlleles2 = new ArrayList<>(parent1.getGenes().get(0).getAlleles());
+		List<T> allelesParent1 = new ArrayList<>(parent1.getGenes().get(0).getAlleles());
+		List<T> allelesParent2 = new ArrayList<>(parent2.getGenes().get(0).getAlleles());
+		List<T> valuesChild1 = new ArrayList<>();
+		List<T> valuesChild2 = new ArrayList<>();
+		int i = 1, j = 0, pos, randomPos = ThreadLocalRandom.current().nextInt(1, parent1.getChromosomeLength() + 1);
 		
 		while(i < randomPos){
 			pos = ThreadLocalRandom.current().nextInt(0, parent1.getChromosomeLength() - 1);
-			if(helper.add(pos)) 
-				values.add(childAlleles1.get(pos));
-			i++;
+			if(helper.add(pos)) { 
+				valuesChild1.add(allelesParent1.get(pos));
+				valuesChild2.add(allelesParent2.get(pos));
+				i++;
+			}
 		}
 		
-		Iterator<T> valuesIter = values.iterator();
-		Iterator<Integer> helperIter = helper.iterator();
-		posAux = helperIter.next();
-	    while (valuesIter.hasNext() && helperIter.hasNext()) {
-	    	alleleAux = valuesIter.next();
-	    	if(values.contains(childAlleles2.get(posAux))) {
-	    		if(posAux != childAlleles2.indexOf(alleleAux))
-	    			hash.put(childAlleles2.indexOf(alleleAux), posAux);
-	   
-	    		childAlleles1.set(posAux, alleleAux);
-    			childAlleles1.set(posAux, childAlleles2Aux.get(posAux));
-	    		valuesIter.remove();
-	    		helperIter.remove();
-	    		posAux = helperIter.next();
-	    	}else
-	    		posAux = helperIter.next();
+		Iterator<T> valuesIter1 = valuesChild1.iterator();
+		Iterator<T> valuesIter2 = valuesChild2.iterator();
+	    while (valuesIter1.hasNext() && valuesIter2.hasNext()) {
+	    	posInParent2.add(allelesParent2.indexOf(valuesIter1.next()));
+	    	posInParent1.add(allelesParent1.indexOf(valuesIter2.next()));
 	    }
 	    
-		Iterator<Integer> helperIter2 = helper.iterator();
-	    while(helperIter2.hasNext()) {
-	    	posAux = helperIter2.next();
-	    	if(hash.containsKey(posAux)) {
-	    		childAlleles1.set(posAux, childAlleles1.get(hash.get(posAux)));
-	    		childAlleles2.set(posAux, childAlleles2.get(hash.get(posAux)));
-	    	}
+	    Iterator<Integer> posIter1 = posInParent1.iterator();
+	    Iterator<Integer> posIter2 = posInParent2.iterator();
+	    while(posIter1.hasNext() && posIter2.hasNext()) {
+	    	childAlleles1.set(posIter2.next(), valuesChild1.get(j));
+	    	childAlleles2.set(posIter1.next(), valuesChild2.get(j));
+	    	j++;
 	    }
 	    
-	    
-	    System.out.println("-------- Hijo  ---------");
-		System.out.println(childAlleles1.toString());
-		
-		for(int j = 0; i < 27; i++) {
-			
-			childAlleles2.set(j, childAlleles2Aux.get(childAlleles1Aux.indexOf(childAlleles1.get(j))));
-		}
-		
-		 System.out.println("-------- Hijo  ---------");
-			System.out.println(childAlleles2.toString());
+	    helper.clear();
+	    posInParent1.clear();
+	    posInParent2.clear();
+	    valuesChild1.clear();
+		valuesChild2.clear();
 		
 	    childGenes1.add(parentGenes1.get(0).createGene(childAlleles1));
 		childGenes2.add(parentGenes2.get(0).createGene(childAlleles2));

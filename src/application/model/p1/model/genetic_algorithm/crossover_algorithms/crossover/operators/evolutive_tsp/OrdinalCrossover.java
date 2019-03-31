@@ -37,7 +37,7 @@ public class OrdinalCrossover extends CrossoverOperator {
 		List<Integer> dinamicAux1 = new ArrayList<Integer>(27);
 		List<Integer> dinamicAux2 = new ArrayList<Integer>(27);
 		T dataP1, dataP2;
-		int dA1, dA2, dL1, dL2, index;
+		int dA1, dA2, dL1, dL2, index1, index2;
 		TreeSet<T> t1 = new TreeSet<T>(), t2 = new TreeSet<T>();
 		
 		for (int i = 0; i < parentAlleles1.size(); i++) {
@@ -56,7 +56,6 @@ public class OrdinalCrossover extends CrossoverOperator {
 		dinamicList1 = createDinamicList(parentAlleles1.size());
 		dinamicList2 = createDinamicList(parentAlleles1.size());
 		
-		System.out.println("He llegao");
 		for (int i = 0; i < parentAlleles1.size(); i++) {
 			//Obtenemos el valor dinamico y su posicion en la lista dinamica
 			dA1 = dinamicAux1.get(i);
@@ -64,44 +63,38 @@ public class OrdinalCrossover extends CrossoverOperator {
 			dA2 = dinamicAux2.get(i);
 			dL2 = dinamicList2.get(dA2);
 			
-			//Comprobamos que el valor sacado de la lista dinamica no sea 25 
-			if(dL1 != 25) {
-				index = parentAlleles1.indexOf(dL1);
-				dataP1 = parentAlleles1.get(index);
-				childAlleles1.add(dataP1);
-				dinamicList1.remove(dA1);
-			}
-			if(dL2 != 25) {
-				index = parentAlleles2.indexOf(dL2);
-				dataP2 = parentAlleles2.get(index);
-				childAlleles2.add(dataP2);
-				dinamicList2.remove(dA2);
-			}
-			
+
+			index1 = parentAlleles1.indexOf(dL1);
+			dataP1 = parentAlleles1.get(index1);
+			childAlleles1.add(dataP1);
+			dinamicList1.remove(dA1);
+				
+			index2 = parentAlleles2.indexOf(dL2);
+			dataP2 = parentAlleles2.get(index2);
+			childAlleles2.add(dataP2);
+			dinamicList2.remove(dA2);
+		
 		}
 		
-		System.out.println("He llegado");
-		childGenes1.add(parentGenes1.get(0).createGene(childAlleles1));
-		childGenes2.add(parentGenes2.get(0).createGene(childAlleles2));
-		childChromosomes.setLeftElement(parent1.createChildren(childGenes1));
-		childChromosomes.setRightElement(parent2.createChildren(childGenes2));
 		
 		for (int i = 0; i < childAlleles1.size(); i++) {
 			t1.add(childAlleles1.get(i));
 			t2.add(childAlleles2.get(i));
 			
 		}
-		System.out.println("Alleles 1 :" + t1.toString());
-		System.out.println("Alleles 2 :" + t2.toString());
-		System.out.println("Alleles 1 :" + childAlleles1);
-		System.out.println("Alleles 2 :" + childAlleles2);
+		
+		childGenes1.add(parentGenes1.get(0).createGene(childAlleles1));
+		childGenes2.add(parentGenes2.get(0).createGene(childAlleles2));
+		childChromosomes.setLeftElement(parent1.createChildren(childGenes1));
+		childChromosomes.setRightElement(parent2.createChildren(childGenes2));
+		
 		return childChromosomes;
 	}
 	
 	private List<Integer> createDinamicList(int size){
 		List<Integer> dinamicList1 = new ArrayList<Integer>();
 		for (int i = 0; i < size + 1; i++) {
-			dinamicList1.add(i);
+			if(i != 25) dinamicList1.add(i);
 		}
 		return dinamicList1;
 	}

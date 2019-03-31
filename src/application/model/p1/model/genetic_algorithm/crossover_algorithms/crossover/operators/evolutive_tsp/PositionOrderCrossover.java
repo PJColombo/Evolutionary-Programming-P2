@@ -29,59 +29,50 @@ public class PositionOrderCrossover extends CrossoverOperator {
 				childGenes1 = new ArrayList<Gene<T>>(parent1.getGenes().size()), childGenes2 = new ArrayList<Gene<T>>(parent1.getGenes().size());
 		
 		TreeSet<Integer> pos = new TreeSet<Integer>();
-		TreeSet<Integer> helper = new TreeSet<Integer>();
 		List<T> values = new ArrayList<>();
-		List<T> allelesParent1 = parent1.getGenes().get(0).getAlleles();
-		List<T> allelesParent2 = parent2.getGenes().get(0).getAlleles();
-		List<T> childAlleles1 = parent1.getGenes().get(0).getAlleles();
-		List<T> childAlleles2 = parent2.getGenes().get(0).getAlleles();
-		T alleleAux;
+		List<T> allelesParent1 = new ArrayList<>(parent1.getGenes().get(0).getAlleles());
+		List<T> allelesProto = new ArrayList<>(parent1.getGenes().get(0).getAlleles());
+		List<T> allelesParent2 = new ArrayList<>(parent2.getGenes().get(0).getAlleles());
+		List<T> childAlleles2 = new ArrayList<>();
 		
-		
-		//Generamos el numero total de posiciones a intercambiar
-		int i = 0, aux, randomPos = ThreadLocalRandom.current().nextInt(1, parent1.getChromosomeLength() + 1);
-		for (int j = 0; j < 2; j++) {
-			System.out.println("-------- Padre -----------");
-			if(j == 0) 
-				System.out.println(childAlleles2.toString());
-			else
-				System.out.println(childAlleles1.toString());
-			
-			//Generamos los indices de las posiciones, y extraemos la ciudad que ocupa esa posicion
-			//Esa ciudad se busca en el allelo opuesto y se extrae la posicion, además guardamos esa ciudad
-			while(i < randomPos){
-				aux = ThreadLocalRandom.current().nextInt(0, parent1.getChromosomeLength() - 1);
-				if(helper.add(aux)) {
-					alleleAux = (i == 0) ? allelesParent1.get(aux) : allelesParent2.get(aux);
-					if(j == 0) 
-						pos.add(allelesParent2.indexOf(alleleAux));
-					else 
-						pos.add(allelesParent1.indexOf(alleleAux));
-					values.add(alleleAux);
-					i++;
-				}
+		int  aux, randomPos = ThreadLocalRandom.current().nextInt(1, parent1.getChromosomeLength() + 1);
+		for (int j = 0; j < randomPos; j++) {
+			aux = ThreadLocalRandom.current().nextInt(0, parent1.getChromosomeLength() - 1);
+			if(pos.add(aux)) {
+				values.add(allelesParent1.get(aux));
 			}
-			
-			i = 0;
-			Iterator<Integer> iterPos = pos.iterator();
-		    while (iterPos.hasNext()) {
-		    	if(j == 0 )
-					childAlleles2.set(iterPos.next(), values.get(i));
-		    	else
-					childAlleles1.set(iterPos.next(), values.get(i));
-				i++;
-		    }
-			i = 0;
-			pos.clear();
-			helper.clear();
-			values.clear();
 		}
 		
-		childGenes1.add(parentGenes1.get(0).createGene(childAlleles1));
+		Iterator<T> it = values.iterator();
+		while(it.hasNext()) {
+			allelesParent2.remove(it.next());
+		}
+		
+		for(int i = 0; i < allelesParent1.size();i++) {
+			if(!pos.contains(i)) {
+				allelesProto.set(i, allelesParent2.get(0));
+				allelesParent2.remove(0);
+			}
+		}
+
+		allelesParent1 = parent1.getGenes().get(0).getAlleles();
+		allelesParent2 = parent2.getGenes().get(0).getAlleles();
+		
+		for(int i = 0; i < allelesParent1.size(); i++){
+			setChild2(childAlleles2, allelesParent1, allelesParent2, allelesProto.get(i));
+		}
+
+		
+		childGenes1.add(parentGenes1.get(0).createGene(allelesProto));
 		childGenes2.add(parentGenes2.get(0).createGene(childAlleles2));
 		childChromosomes.setLeftElement(parent1.createChildren(childGenes1));
 		childChromosomes.setRightElement(parent2.createChildren(childGenes2));
 		return childChromosomes;
 	}
 
+	
+	public <T> void setChild2(List<T> child2, List<T> parent1, List<T> parent2,  T elem) {
+		int posAux = parent1.indexOf(elem);
+		child2.add(parent2.get(posAux));
+	}
 }
