@@ -30,8 +30,6 @@ public class CycleCrossover extends CrossoverOperator {
 		for(int i = 0; i < parentGenes1.size(); i++) {
 			parentAlleles1 = parentGenes1.get(i).getAlleles();
 			parentAlleles2 = parentGenes2.get(i).getAlleles();
-			System.out.println("P1 " + parentAlleles1);
-			System.out.println("P2: " + parentAlleles2);
 			childAlleles1 = new ArrayList<>(parentAlleles1.size());
 			childAlleles2 = new ArrayList<>(parentAlleles2.size());	
 			
