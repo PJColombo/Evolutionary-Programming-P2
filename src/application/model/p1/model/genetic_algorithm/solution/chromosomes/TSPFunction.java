@@ -90,7 +90,7 @@ public class TSPFunction extends Chromosome<TSPGene>{
 		for(int i = 0, j =  i + 1; i < chromosomeLength - 1; i++, j++) {
 			cityI = (int) alleles.get(i);
 			cityJ = (int) alleles.get(j);
-			
+
 			if(cityI < cityJ)
 				coste = distances[cityJ][cityI];
 			else
