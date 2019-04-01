@@ -1,6 +1,7 @@
 package application.model.p1.model.genetic_algorithm.selection_algorithms.algorithms;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import application.model.p1.model.genetic_algorithm.selection_algorithms.SelectionAlgorithm;
@@ -12,6 +13,7 @@ public class RestSelection implements SelectionAlgorithm {
 
 	private int participants; 
 	private SelectionAlgorithm selAlg;
+	private boolean maximize;
 	/*
 	 * Participants Percentage that it should take from population in case
 	 * it doesn't receive participants integer variable.
@@ -24,9 +26,10 @@ public class RestSelection implements SelectionAlgorithm {
 	 * */
 	private final double MAX_COPIES_PERCENTAGE = 0.6;
 	
-	public RestSelection(int participants, SelectionAlgorithm selAlg) {
+	public RestSelection(int participants, SelectionAlgorithm selAlg, Boolean maximize) {
 		this.participants = participants;
 		this.selAlg = selAlg;
+		this.maximize = maximize == null ? false : maximize;
 	}
 	
 	@SuppressWarnings("unchecked")
@@ -38,7 +41,9 @@ public class RestSelection implements SelectionAlgorithm {
 		int numberCopies;
 		boolean isFilled = false;
 		Chromosome<? extends Gene<T>> c;
-
+		Collections.sort(population);
+		if(maximize)
+			Collections.reverse(population);
 		if(this.participants == 0)
 			this.participants = (int) Math.floor(this.PARTICIPANTS_PERCENTAGE * population.size());
 		

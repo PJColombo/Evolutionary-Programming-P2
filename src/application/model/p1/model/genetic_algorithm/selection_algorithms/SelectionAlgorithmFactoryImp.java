@@ -27,7 +27,7 @@ public class SelectionAlgorithmFactoryImp extends SelectionAlgorithmFactory {
 			return new TruncationSelection(truncPercentage);
 		case "rest":
 			return new RestSelection(participants, 
-					SelectionAlgorithmFactory.getInstance().getSelectionAlgorithm(additionalSelAlg, participants, truncPercentage, null, maximize));
+					SelectionAlgorithmFactory.getInstance().getSelectionAlgorithm(additionalSelAlg, participants, truncPercentage, null, maximize), maximize);
 		default:
 			return new RouletteSelection();
 		}

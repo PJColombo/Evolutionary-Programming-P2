@@ -128,6 +128,9 @@ public class ChartController implements Initializable{
     @FXML
     private Label elitismPercentageL;
     
+    @FXML
+    private ComboBox<String> restSelAlgorithm;
+    
     //------------------------------------------
     private GeneticAlgorithm ge = null;
     private Double[] arg = new Double[6];
@@ -162,6 +165,7 @@ public class ChartController implements Initializable{
     //private final ObservableList<String> listMutationAlgorithms = FXCollections.observableArrayList("Conventional", "Inversion", "Swap", "reversal", "tsp_swap", "ins_swap", "hrt_swap", "exc_swap");
     private final ObservableList<String> listMutationAlgorithms = FXCollections.observableArrayList("Reversal", "TSP_Swap", "Ins_Swap", "Hrt_Swap", "Exc_Swap");
     
+    private final ObservableList<String> listRestAlgorithms = FXCollections.observableArrayList("Roulette", "Tournament", "Probabilistic_tournament", "Stochastic", "Truncation", "Ranking");
     private final ObservableList<String> showFunctionList = FXCollections.observableArrayList("General best individual", "Generation best individual", "Average generation fitness");
     
     
@@ -226,7 +230,10 @@ public class ChartController implements Initializable{
         	elitismPercentageTF.setText(df.format(newValue.doubleValue()));
         });
         
-        
+
+        restSelAlgorithm.setItems(listRestAlgorithms);
+        restSelAlgorithm.getSelectionModel().select(0);
+      
     }
 
     public Double[] getData(){
@@ -283,7 +290,7 @@ public class ChartController implements Initializable{
     					crossPerc = RoundDecimal.twoDecimalNumber(crossPerc);
     					mutPerc = RoundDecimal.twoDecimalNumber(mutPerc);
     					ge = new GeneticAlgorithm(nVariables, function.getValue(), arg[0].intValue(), arg[1].intValue(), selAlgorithm.getValue(), 
-    							crossAlgorithm.getValue(), crossPerc, mutationAlgorithm.getValue(), mutPerc, arg[4], elitism);
+    							crossAlgorithm.getValue(), crossPerc, mutationAlgorithm.getValue(), mutPerc, arg[4], elitism, restSelAlgorithm.getValue());
     					ge.setCrosspointsNum(nCrosspoints);
     		    		stats = this.ge.execute();
 
@@ -317,7 +324,7 @@ public class ChartController implements Initializable{
     		else {
     			elitism = arg[5] == 1.0;
     			ge = new GeneticAlgorithm(nVariables, function.getValue(), arg[0].intValue(), arg[1].intValue(), selAlgorithm.getValue(), 
-        				crossAlgorithm.getValue(), arg[2], mutationAlgorithm.getValue(), arg[3], arg[4], elitism);
+        				crossAlgorithm.getValue(), arg[2], mutationAlgorithm.getValue(), arg[3], arg[4], elitism, restSelAlgorithm.getValue());
         		ge.setCrosspointsNum(this.nCrosspoints);
         		
         		stats = this.ge.execute();
@@ -419,6 +426,19 @@ public class ChartController implements Initializable{
 		}
     }
 
+    @FXML
+    void onAlgorithmSelected(ActionEvent event) {
+    	System.out.println("aqui");
+    	String algSelected = selAlgorithm.getValue();
+    	System.out.println(algSelected);
+    	if(algSelected.equalsIgnoreCase("rest")) {
+    		restSelAlgorithm.setDisable(false);
+    	}
+    	else {
+    		restSelAlgorithm.setDisable(true);
+    	}
+    }
+    
     @FXML
     void onFunctionSelected(ActionEvent event) {
     	String fSelected = function.getValue();

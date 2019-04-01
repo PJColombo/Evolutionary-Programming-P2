@@ -44,8 +44,10 @@ public class GeneticAlgorithm {
 	private Integer crosspointsNum;
 	
 	
+	private String restSelectionAlgorithm;
+	
 	public GeneticAlgorithm(Integer nVariables, String function, int popSize, int maxGenNumber, String selectionAlgorithm, String crossoverOperator,
-			double crossoverProbability, String mutationOperator, double mutationProbability, double tolerance, boolean elitism) {
+			double crossoverProbability, String mutationOperator, double mutationProbability, double tolerance, boolean elitism, String restSelectionAlg) {
 		super();
 		this.nVariables = nVariables;
 		this.function = function;
@@ -61,6 +63,8 @@ public class GeneticAlgorithm {
 		this.elitism = elitism;
 		if(this.elitism)
 			this.eliteSize = (int) Math.ceil(popSize * this.ELITISIM_PERCENTAGE);
+		
+		this.restSelectionAlgorithm = restSelectionAlg;
 		
 	}
 
@@ -189,7 +193,7 @@ public class GeneticAlgorithm {
 	private void select() {
 		SelectionAlgorithmFactory algFactory = SelectionAlgorithmFactory.getInstance();
 		//TODO Add additional selection algorithm field to UI (Rest Selection).
-		SelectionAlgorithm alg = algFactory.getSelectionAlgorithm(this.selectionAlgorithm, 0, null, "roullete", this.population.get(0).isMaximize());
+		SelectionAlgorithm alg = algFactory.getSelectionAlgorithm(this.selectionAlgorithm, 0, null, this.restSelectionAlgorithm, this.population.get(0).isMaximize());
 		this.population = (List<Chromosome<? extends Gene<?>>>) alg.selection(this.population);
 		
 	}
