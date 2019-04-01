@@ -157,8 +157,8 @@ public class ChartController implements Initializable{
     //private final ObservableList<String> listFunctions = FXCollections.observableArrayList("Function1", "Function2", "Function3", "BinaryFunction4" , "RealFunction4", "TSP");
     private final ObservableList<String> listFunctions = FXCollections.observableArrayList("TSP");
     //private final ObservableList<String> listCrossAlgorithms = FXCollections.observableArrayList("Multipoint", "Uniform", "Onepoint", "cycle", "erx", "pmx", "ocx", "prox", "poox");
-    private final ObservableList<String> listCrossAlgorithms = FXCollections.observableArrayList("Cycle", "ERX", "PMX", "OCX", "PROX", "POOX");
-    private final ObservableList<String> listSelAlgorithms = FXCollections.observableArrayList("Roulette", "Tournament", "Probabilistic_tournament", "Stochastic", "Truncation");
+    private final ObservableList<String> listCrossAlgorithms = FXCollections.observableArrayList("Cycle", "ERX", "PMX", "OCX", "PROX", "POOX", "Diagonal");
+    private final ObservableList<String> listSelAlgorithms = FXCollections.observableArrayList("Roulette", "Tournament", "Probabilistic_tournament", "Stochastic", "Truncation", "Ranking", "Rest");
     //private final ObservableList<String> listMutationAlgorithms = FXCollections.observableArrayList("Conventional", "Inversion", "Swap", "reversal", "tsp_swap", "ins_swap", "hrt_swap", "exc_swap");
     private final ObservableList<String> listMutationAlgorithms = FXCollections.observableArrayList("Reversal", "TSP_Swap", "Ins_Swap", "Hrt_Swap", "Exc_Swap");
     

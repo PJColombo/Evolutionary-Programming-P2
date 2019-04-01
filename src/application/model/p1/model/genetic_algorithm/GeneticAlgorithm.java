@@ -123,31 +123,14 @@ public class GeneticAlgorithm {
 			if(this.generations == this.maxGenNumber) {		
 				System.out.println("Generation " + this.generations + "|| " + s);
 			}
-			System.out.println(this.generations);
 			stats.add(s);
 		}
 		
 		return stats;
 	}
 	private void createInitialPopulation() {
-		/*int distances[][] = new int[27][27];
-		File file = new File("PATH"); 
-		try {
-			BufferedReader br = new BufferedReader(new FileReader(file));
-			String st;
-			while ((st = br.readLine()) != null) {
-			    st.split(",");
-			} 
-		} catch (IOException e) {
-			e.printStackTrace();
-		} */
-		
 		for (int i = 0; i < this.popSize; i++)
 			this.population.add(ChromosomeFactory.getInstance().createChromosome(this.function, this.tolerance, null, null, this.nVariables, TSPDistances._DISTANCES, TSPDistances.size, 25));
-		
-		for(int i = 0; i < this.popSize; i++) {
-			System.out.println(this.population.get(i));
-		}
 	}
 	
 	public Stat evaluatePopulation() {
@@ -206,7 +189,7 @@ public class GeneticAlgorithm {
 	private void select() {
 		SelectionAlgorithmFactory algFactory = SelectionAlgorithmFactory.getInstance();
 		//TODO Add additional selection algorithm field to UI (Rest Selection).
-		SelectionAlgorithm alg = algFactory.getSelectionAlgorithm(this.selectionAlgorithm, 0, null, "roullete");
+		SelectionAlgorithm alg = algFactory.getSelectionAlgorithm(this.selectionAlgorithm, 0, null, "roullete", this.population.get(0).isMaximize());
 		this.population = (List<Chromosome<? extends Gene<?>>>) alg.selection(this.population);
 		
 	}

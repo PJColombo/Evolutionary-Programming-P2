@@ -39,8 +39,6 @@ public class PartiallyMappedCrossover extends CrossoverOperator {
 			cp1 = cp2;
 			cp2 = aux;
 		}
-		System.out.println("cp1 " + cp1);
-		System.out.println("cp2 " + cp2);
 		segment1 = new ArrayList<>(parentGenes2.get(0).getAlleles().subList(cp1 , cp2 + 1));
 		segment2 = new ArrayList<>(parentGenes1.get(0).getAlleles().subList(cp1 , cp2 + 1));
 		

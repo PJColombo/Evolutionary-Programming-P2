@@ -37,20 +37,16 @@ public class HeuristicMutation extends MutationOperator {
 				pos.add(a);
 			}
 		}
-		System.out.println("Permutaciones:" + elem.size() );
 		if(elem.size() > 0)
 			PermutationGenerator(elem, permutationList, elem.size());
 		
 		int k = 0;
 		for (int i = 0; i < permutationList.size(); i++) {
-			
 			for (Iterator<Integer> iterator = pos.iterator(); iterator.hasNext();) {
 				int aux = iterator.next();
 				alleles.set(aux,permutationList.get(i).get(k));
 				k++;
 			}
-			System.out.println("-------------------");
-			System.out.println(alleles);
 			punt = TSPDistancesCalculator.Calculator(25, alleles);
 			if(punt < bestPun || bestPun == 0) {
 				bestPun = punt;

@@ -4,6 +4,7 @@ import application.model.p1.model.genetic_algorithm.crossover_algorithms.crossov
 import application.model.p1.model.genetic_algorithm.crossover_algorithms.crossover.operators.OnePointCrossover;
 import application.model.p1.model.genetic_algorithm.crossover_algorithms.crossover.operators.UniformCrossover;
 import application.model.p1.model.genetic_algorithm.crossover_algorithms.crossover.operators.evolutive_tsp.CycleCrossover;
+import application.model.p1.model.genetic_algorithm.crossover_algorithms.crossover.operators.evolutive_tsp.DiagonalCrossover;
 import application.model.p1.model.genetic_algorithm.crossover_algorithms.crossover.operators.evolutive_tsp.EdgeRecombinationCrossover;
 import application.model.p1.model.genetic_algorithm.crossover_algorithms.crossover.operators.evolutive_tsp.OrdinalCrossover;
 import application.model.p1.model.genetic_algorithm.crossover_algorithms.crossover.operators.evolutive_tsp.PartiallyMappedCrossover;
@@ -33,6 +34,8 @@ public class CrossoverOperatorFactoryImp extends CrossoverOperatorFactory {
 			return new PriorityOrderCrossover(crossoverProbability);
 		else if(type.equalsIgnoreCase("poox"))
 			return new PositionOrderCrossover(crossoverProbability);
+		else if(type.equalsIgnoreCase("diagonal"))
+			return new DiagonalCrossover(crossoverProbability, initialFinalCity);
 		else
 			return new OnePointCrossover(crossoverProbability);
 		

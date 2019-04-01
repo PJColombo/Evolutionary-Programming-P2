@@ -1,6 +1,6 @@
 package application.model.p1.model.genetic_algorithm.selection_algorithms;
 
-import application.model.p1.model.genetic_algorithm.selection_algorithms.algorithms.RankSelection;
+import application.model.p1.model.genetic_algorithm.selection_algorithms.algorithms.RankingSelection;
 import application.model.p1.model.genetic_algorithm.selection_algorithms.algorithms.RestSelection;
 import application.model.p1.model.genetic_algorithm.selection_algorithms.algorithms.RouletteSelection;
 import application.model.p1.model.genetic_algorithm.selection_algorithms.algorithms.StochasticUniversalSelection;
@@ -10,7 +10,7 @@ import application.model.p1.model.genetic_algorithm.selection_algorithms.algorit
 public class SelectionAlgorithmFactoryImp extends SelectionAlgorithmFactory {
 
 	@Override
-	public SelectionAlgorithm getSelectionAlgorithm(String algorithm, int participants, Double truncPercentage, String additionalSelAlg) {
+	public SelectionAlgorithm getSelectionAlgorithm(String algorithm, int participants, Double truncPercentage, String additionalSelAlg, Boolean maximize) {
 		
 		switch (algorithm.toLowerCase()) {
 		case "roulette":
@@ -22,12 +22,12 @@ public class SelectionAlgorithmFactoryImp extends SelectionAlgorithmFactory {
 		case "probabilistic_tournament":
 			return new TournamentSelection(TournamentType.PROBABILISTIC, participants);
 		case "ranking":
-			return new RankSelection();
+			return new RankingSelection(maximize);
 		case "truncation":
 			return new TruncationSelection(truncPercentage);
 		case "rest":
 			return new RestSelection(participants, 
-					SelectionAlgorithmFactory.getInstance().getSelectionAlgorithm(additionalSelAlg, participants, truncPercentage, null));
+					SelectionAlgorithmFactory.getInstance().getSelectionAlgorithm(additionalSelAlg, participants, truncPercentage, null, maximize));
 		default:
 			return new RouletteSelection();
 		}
